@@ -1,0 +1,19 @@
+version: '3' 
+services:
+  react: 
+    build: ./react-hello-world
+    ports:
+      - "8080:80"
+    links:
+      - "backend"
+    depends_on:
+      - "backend"
+
+  backend:
+    environment:
+      SERVERPORT: 3000
+      APIPATH: '/api/data'
+    build: ./simple-node-backend
+    ports:
+      - "3000:3000"
+
