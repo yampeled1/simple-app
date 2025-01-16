@@ -1,0 +1,152 @@
+{
+  "dashboard": {
+    "id": 1,
+    "uid": 1,
+    "title": "Comprehensive Backend Metrics",
+    "tags": ["backend", "metrics", "performance"],
+    "timezone": "browser",
+    "schemaVersion": 36,
+    "version": 0,
+    "refresh": "5s",
+    "panels": [
+      {
+        "type": "stat",
+        "title": "Service Health/Uptime",
+        "targets": [
+          {
+            "expr": "up{job='backend'}",
+            "legendFormat": "Service Health",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "none",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "red", "value": 0 },
+                { "color": "green", "value": 1 }
+              ]
+            },
+            "mappings": [
+              {
+                "type": "value",
+                "options": {
+                  "0": { "text": "Down" },
+                  "1": { "text": "Up" }
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "graph",
+        "title": "HTTP Request Count",
+        "targets": [
+          {
+            "expr": "sum(rate(http_requests_total[1m])) by (status, method)",
+            "legendFormat": "{{method}} {{status}}",
+            "refId": "A"
+          }
+        ],
+        "xaxis": {
+          "mode": "time"
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": "Requests per Second",
+            "logBase": 1,
+            "show": true
+          },
+          {
+            "format": "short",
+            "show": true
+          }
+        ]
+      },
+      {
+        "type": "graph",
+        "title": "Average Response Time",
+        "targets": [
+          {
+            "expr": "sum(rate(http_response_time_seconds_sum[1m])) / sum(rate(http_response_time_seconds_count[1m]))",
+            "legendFormat": "Average Response Time",
+            "refId": "A"
+          }
+        ],
+        "xaxis": {
+          "mode": "time"
+        },
+        "yaxes": [
+          {
+            "format": "s",
+            "label": "Response Time (s)",
+            "logBase": 1,
+            "show": true
+          },
+          {
+            "format": "short",
+            "show": true
+          }
+        ]
+      },
+      {
+        "type": "graph",
+        "title": "95th Percentile Response Time",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, sum(rate(http_response_time_seconds_bucket[1m])) by (le))",
+            "legendFormat": "95th Percentile Response Time",
+            "refId": "A"
+          }
+        ],
+        "xaxis": {
+          "mode": "time"
+        },
+        "yaxes": [
+          {
+            "format": "s",
+            "label": "Response Time (s)",
+            "logBase": 1,
+            "show": true
+          },
+          {
+            "format": "short",
+            "show": true
+          }
+        ]
+      },
+      {
+        "type": "graph",
+        "title": "Error Rates",
+        "targets": [
+          {
+            "expr": "sum(rate(http_error_count[1m])) by (status)",
+            "legendFormat": "{{status}}",
+            "refId": "A"
+          }
+        ],
+        "xaxis": {
+          "mode": "time"
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": "Errors per Second",
+            "logBase": 1,
+            "show": true
+          },
+          {
+            "format": "short",
+            "show": true
+          }
+        ]
+      }
+    ]
+  },
+  "overwrite": true
+}
+
