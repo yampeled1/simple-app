@@ -106,3 +106,8 @@ This will start the following services:
 - Confirm Prometheus is scraping metrics using its UI (`http://localhost:9090`).
 - Ensure the backend is up and exposing metrics.
 
+
+
+## Architecture Diagram
+
+![alt text](https://github.com/yampeled1/simple-app/blob/dev/diagram.png?raw=true)
