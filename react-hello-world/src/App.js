@@ -1,10 +1,33 @@
 import logo from './logo.svg';
 import './App.css';
+import { usePageLoadMetrics } from './metrics.js';
 import React, { useState, useEffect } from 'react';
+
+
+async function fetchWithMetrics(url, options) {
+  const start = performance.now();
+  const response = await fetch(url, options);
+  const end = performance.now();
+
+  const latency = end - start;
+
+  // Send metrics to your backend
+  fetch('http://localhost:3000/metrics', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      metric: 'api_call_latency',
+      url,
+      latency,
+    }),
+  }).catch((err) => console.error('Failed to report metrics', err));
+
+  return response;
+}
 
 async function fetchBackendData() {
   try {
-    const response = await fetch('http://localhost:3000/api/data'); // Replace with your backend URL
+    const response = await fetchWithMetrics('http://localhost:3000/api/data'); // Replace with your backend URL
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -18,6 +41,7 @@ async function fetchBackendData() {
 
 function App() {
 
+  usePageLoadMetrics();
   const [message, setMessage] = useState('Loading...');
 
   useEffect(() => {

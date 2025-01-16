@@ -17,3 +17,26 @@ services:
     ports:
       - "3000:3000"
 
+  prometheus:
+    image: prom/prometheus:v3.0.1
+    ports:
+      - "9090:9090"
+    links:
+      - "backend"
+      - "grafana"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    volumes:
+      - ./misc/prometheus/:/etc/prometheus
+
+  grafana:
+    image: grafana/grafana:11.3.2    
+    ports:
+      - '3002:3000'
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./misc/grafana/grafana-storage:/var/lib/grafana
+      - ./misc/grafana/datasources/:/etc/grafana/provisioning/datasources
+
