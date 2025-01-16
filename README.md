@@ -1,4 +1,4 @@
-# Project Name: Backend and React App with Metrics Visualization
+# Backend and React App with Metrics Visualization
 
 ## Overview
 This project contains a backend service and a React application, both dockerized and configured with Prometheus and Grafana for monitoring. The backend exposes metrics for HTTP request counts, response times, and error rates. Prometheus scrapes these metrics, and Grafana visualizes them in dashboards.
@@ -74,6 +74,19 @@ This will start the following services:
 2. Restart the Prometheus container:
    ```bash
    docker-compose restart prometheus
+   ```
+
+### Adding new Dashboard to Grafana
+1. go to http://localhost:3002 log in as the admin
+2. navigate to dashboards -> use prometheus as the datasource in order to get all the relevant metrics
+
+####
+example custom metrics exported to Prometheus to use
+   ```bash
+   page_load_time_seconds
+   http_requests_total
+   http_response_time_seconds
+   http_error_count
    ```
 
 ---
