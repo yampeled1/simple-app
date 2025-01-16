@@ -16,9 +16,10 @@ This project contains a backend service and a React application, both dockerized
 
 ## Setup Instructions
 
-### 1. Clone the Repository
+### 1. Clone the Repository and change working directory
 ```bash
 git clone https://github.com/yampeled1/simple-app.git
+cd simple-app
 ```
 
 ### 2. Start the Services
@@ -66,7 +67,7 @@ This will start the following services:
    npm start
    ```
    The app will run on `http://localhost:300x`.
-   Please notice react will try to deploy on port 3000, If the backend already deployed on this port it will disocver it and will ask to deploy on any random port
+   Please notice react will try to deploy on port 3000, If the backend already deployed on this port it will discover it and will ask to deploy on any random available port
 
 ### Updating Prometheus Configuration
 1. Edit `prometheus.yml` to adjust scrape intervals or add new scrape targets.
