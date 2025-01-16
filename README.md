@@ -24,7 +24,7 @@ git clone https://github.com/yampeled1/simple-app.git
 ### 2. Start the Services
 Using Docker Compose:
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 This will start the following services:
